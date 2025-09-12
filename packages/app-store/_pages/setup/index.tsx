@@ -17,6 +17,7 @@ export const AppSetupMap = {
   paypal: dynamic(() => import("../../paypal/pages/setup")),
   hitpay: dynamic(() => import("../../hitpay/pages/setup")),
   btcpayserver: dynamic(() => import("../../btcpayserver/pages/setup")),
+  umami: dynamic(() => import("../../umami/pages/setup")),
 };
 
 export const AppSetupPage = (props: { slug: string }) => {
