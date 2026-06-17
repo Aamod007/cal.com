@@ -16,6 +16,8 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
   team-labels:
+    # Requires the org-only EQUITY_BEE_TEAM_LABELER_ACTION_TOKEN secret, which forks don't have.
+    if: ${{ github.repository == 'calcom/cal.com' }}
     permissions:
       contents: read
       pull-requests: write
