@@ -64,6 +64,11 @@ export async function getBooking(bookingId: number) {
           metadata: true,
           customReplyToEmail: true,
           title: true,
+          seatsPerTimeSlot: true,
+          seatsShowAttendees: true,
+          seatsShowAvailabilityCount: true,
+          disableRescheduling: true,
+          disableCancelling: true,
           teamId: true,
           parentId: true,
           parent: {
@@ -96,6 +101,7 @@ export async function getBooking(bookingId: number) {
       userId: true,
       uid: true,
       paid: true,
+      oneTimePassword: true,
       destinationCalendar: true,
       status: true,
       user: {
@@ -137,6 +143,7 @@ export async function getBooking(bookingId: number) {
     return {
       name: attendee.name,
       email: attendee.email,
+      phoneNumber: attendee.phoneNumber,
       timeZone: attendee.timeZone,
       language: {
         translate: await getTranslation(attendee.locale ?? "en", "common"),
@@ -164,6 +171,7 @@ export async function getBooking(bookingId: number) {
     title: booking.title,
     bookerUrl,
     description: booking.description || undefined,
+    additionalNotes: booking.description || undefined,
     startTime: booking.startTime.toISOString(),
     endTime: booking.endTime.toISOString(),
     customInputs: isPrismaObjOrUndefined(booking.customInputs),
@@ -194,6 +202,16 @@ export async function getBooking(bookingId: number) {
     destinationCalendar: selectedDestinationCalendar ? [selectedDestinationCalendar] : [],
     recurringEvent: parseRecurringEvent(eventType?.recurringEvent),
     customReplyToEmail: booking.eventType?.customReplyToEmail,
+    seatsPerTimeSlot: booking.eventType?.seatsPerTimeSlot,
+    seatsShowAttendees: booking.eventType?.seatsPerTimeSlot
+      ? booking.eventType?.seatsShowAttendees
+      : true,
+    seatsShowAvailabilityCount: booking.eventType?.seatsPerTimeSlot
+      ? booking.eventType?.seatsShowAvailabilityCount
+      : true,
+    disableRescheduling: booking.eventType?.disableRescheduling ?? false,
+    disableCancelling: booking.eventType?.disableCancelling ?? false,
+    oneTimePassword: booking.oneTimePassword,
   };
 
   return {
